@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>anton_void</title>
+    <!-- Подключаем шрифт Titillium Web -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600&display=swap">
+    <!-- Подключаем FontAwesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #d3d3d3; /* Светло-серый фон */
+            color: #333333; /* Тёмно-серый текст */
+            font-family: 'Titillium Web', sans-serif; /* Используем Titillium Web */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: url('One_Anton_Void.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        h1 {
+            font-size: 2em; /* Уменьшенный размер шрифта */
+            margin-bottom: 20px;
+            font-weight: 600; /* Жирное начертание */
+            text-transform: uppercase; /* Преобразование текста в верхний регистр */
+            color: #333333; /* Тёмно-серый текст для заголовка */
+        }
+        .music-player {
+            background-color: rgba(0, 0, 0, 0.2); /* Более прозрачный черный фон */
+            padding: 15px; /* Увеличенные отступы */
+            border-radius: 5px; /* Более строгие углы */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень для контейнера плеера */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Выравнивание по центру */
+            justify-content: center; /* Центрирование содержимого */
+            max-width: 500px;
+            margin: 20px auto; /* Выравнивание по центру */
+        }
+        .music-player p {
+            margin: 10px 0; /* Отступы сверху и снизу */
+            font-size: 1.1em; /* Немного увеличенный размер шрифта */
+            font-weight: normal; /* Обычное начертание */
+            text-align: center; /* Выравнивание текста по центру */
+            color: #333333; /* Тёмно-серый текст для названий треков */
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #333333; /* Тёмно-серый текст для футера */
+        }
+        a {
+            color: #333333; /* Тёмно-серый цвет текста ссылок */
+            text-decoration: none; /* Убираем подчеркивание */
+        }
+        a:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+        audio {
+            width: 100%; /* Ширина плеера на 100% от родительского контейнера */
+            border-radius: 5px; /* Округление углов */
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон для элемента audio */
+        }
+        .playlist {
+            display: grid; /* Используем сетку */
+            grid-template-columns: repeat(2, 1fr); /* Два столбика */
+            gap: 10px; /* Пробел между элементами */
+            margin-top: 20px;
+            justify-content: center; /* Центрирование содержимого */
+        }
+        .playlist button {
+            padding: 10px;
+            border: 2px solid #333333; /* Тёмно-серый окантовка кнопок */
+            color: #333333; /* Тёмно-серый текст на кнопках */
+            background-color: transparent; /* Убираем фон кнопок */
+            border-radius: 5px; /* Прямоугольные углы */
+            cursor: pointer;
+            font-size: 1em;
+            text-align: left; /* Выравнивание текста по левому краю */
+            width: 100%; /* Ширина кнопок на 100% от родительского контейнера */
+            box-sizing: border-box; /* Включаем padding и border в ширину кнопок */
+            margin: 0; /* Убираем отступы между кнопками */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Легкая тень для кнопок */
+            transition: background-color 0.3s, color 0.3s; /* Плавный переход цвета фона и текста */
+        }
+        .playlist button.active {
+            background-color: #333333; /* Тёмно-серый фон для активной кнопки */
+            color: #ffffff; /* Белый текст для активной кнопки */
+        }
+        .playlist button:hover {
+            background-color: #333333; /* Тёмно-серый фон кнопок при наведении */
+            color: #ffffff; /* Белый текст на кнопках при наведении */
+        }
+        .mode-selector {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 5px; /* Пробел между иконками */
+        }
+        .mode-selector input[type="radio"] {
+            display: none; /* Скрыть стандартные радио-кнопки */
+        }
+        .mode-selector label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px; /* Уменьшенные отступы */
+            border: 2px solid #333333; /* Тёмно-серый окантовка кнопок */
+            color: #333333; /* Тёмно-серый текст на кнопках */
+            background-color: transparent; /* Убираем фон кнопок */
+            border-radius: 5px; /* Прямоугольные углы */
+            cursor: pointer;
+            font-size: 1em; /* Размер иконки */
+            width: 30px; /* Ширина иконки */
+            height: 30px; /* Высота иконки */
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1); /* Легкая тень для кнопок */
+            transition: background-color 0.3s, color 0.3s; /* Плавный переход цвета фона и текста */
+        }
+        .mode-selector input[type="radio"]:checked + label {
+            background-color: #333333; /* Тёмно-серый фон для активной кнопки */
+            color: #ffffff; /* Белый текст для активной кнопки */
+        }
+    </style>
+</head>
+<body>
+    <h1>anton_void</h1>
+
+    <div class="music-player">
+        <p id="track-title">Выберите трек</p>
+        <audio id="audio-player" controls>
+            <source src="" type="audio/mpeg">
+            Ваш браузер не поддерживает элемент audio.
+        </audio>
+        <div class="mode-selector">
+            <input type="radio" id="sequential" name="playback-mode" value="sequential" checked>
+            <label for="sequential"><i class="fas fa-arrow-right"></i></label> <!-- Значок последовательного воспроизведения -->
+
+            <input type="radio" id="random" name="playback-mode" value="random">
+            <label for="random"><i class="fas fa-random"></i></label> <!-- Значок случайного воспроизведения -->
+
+            <input type="radio" id="loop" name="playback-mode" value="loop">
+            <label for="loop"><i class="fas fa-repeat"></i></label> <!-- Значок воспроизведения по кругу -->
+        </div>
+        <div class="playlist">
+            <button onclick="playTrack(0)">Back in the ranks</button>
+            <button onclick="playTrack(1)">I wanted to rest</button>
+        </div>
+    </div>
+
+    <footer>
+        <p><a href="mailto:antonvoidmail@yandex.ru">antonvoidmail@yandex.ru</a></p>
+    </footer>
+
+    <script>
+        const tracks = [
+            { title: 'Back in the ranks', src: 'Back in the ranks.flac' },
+            { title: 'I wanted to rest', src: 'I wanted to rest.flac' }
+        ];
+
+        let currentTrackIndex = -1;
+        let playbackMode = 'sequential'; // Значение по умолчанию
+
+        function playTrack(index) {
+            const audioPlayer = document.getElementById('audio-player');
+            const trackTitle = document.getElementById('track-title');
+            const buttons = document.querySelectorAll('.playlist button');
+
+            // Удаляем класс active у всех кнопок
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Добавляем класс active к текущей кнопке
+            buttons[index].classList.add('active');
+
+            audioPlayer.src = tracks[index].src;
+            audioPlayer.play();
+            trackTitle.textContent = tracks[index].title;
+            currentTrackIndex = index;
+        }
+
+        function getRandomTrackIndex() {
+            return Math.floor(Math.random() * tracks.length);
+        }
+
+        function getNextTrackIndex() {
+            return (currentTrackIndex + 1) % tracks.length;
+        }
+
+        function handleTrackEnd() {
+            let nextTrackIndex;
+
+            if (playbackMode === 'random') {
+                nextTrackIndex = getRandomTrackIndex();
+            } else if (playbackMode === 'loop') {
+                nextTrackIndex = currentTrackIndex; // Воспроизведение текущего трека по кругу
+            } else {
+                nextTrackIndex = getNextTrackIndex();
+            }
+
+            playTrack(nextTrackIndex);
+        }
+
+        function setupEventListeners() {
+            const audioPlayer = document.getElementById('audio-player');
+            const radioButtons = document.querySelectorAll('.mode-selector input[type="radio"]');
+
+            audioPlayer.addEventListener('ended', handleTrackEnd);
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    playbackMode = document.querySelector('.mode-selector input[type="radio"]:checked').value;
+                });
+            });
+        }
+
+        setupEventListeners();
+    </script>
+</body>
+</html>
